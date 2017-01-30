@@ -13970,7 +13970,18 @@ namespace ts {
         }
 
         function checkNonNullAssertion(node: NonNullExpression) {
-            return getNonNullableType(checkExpression(node.expression));
+            if(!strictNullChecks) {
+                // Actually adding this error results in numerous errors compiling the ts codebase
+                // In the interest of keeping this PR small, it's been omitted
+                // error(node, Diagnostics.Use_of_non_null_assertion_operator_without_strictNullChecks_enabled);
+                return checkExpression(node.expression);
+            }
+            const expr = checkExpression(node.expression);
+            const nonNullable = getNonNullableType(expr);
+            if(isTypeIdenticalTo(nonNullable, expr)) {
+                error(node, Diagnostics.The_expression_asserted_to_be_non_null_is_already_non_null);
+            }
+            return nonNullable;
         }
 
         function checkMetaProperty(node: MetaProperty) {

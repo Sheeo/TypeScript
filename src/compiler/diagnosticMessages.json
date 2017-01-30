@@ -2043,6 +2043,14 @@
         "category": "Error",
         "code": 2704
     },
+    "The expression asserted to be non-null is already non-null": {
+        "category": "Error",
+        "code": 2705
+    },
+    "Use of non-null assertion operator without strictNullChecks enabled": {
+        "category": "Error",
+        "code": 2706
+    },
 
     "Import declaration '{0}' is using private name '{1}'.": {
         "category": "Error",
